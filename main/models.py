@@ -1,17 +1,15 @@
+from django.core.validators import RegexValidator
 from django.db import models
-
-
-class Position(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
 
 
 class Staff(models.Model):
     first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
-    position = models.ForeignKey(Position, on_delete=models.CASCADE)
+    last_name = models.CharField(max_length=255, blank=True)
+    phone = models.CharField(max_length=15, unique=True,
+        # validators=[RegexValidator(regex=r'^\d{10,15}$', message="Telefonda 10 tadan 15 tagacha raqam bolishi kerak")]
+    )
+    age = models.IntegerField(blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
@@ -21,6 +19,15 @@ class Shift(models.Model):
     name = models.CharField(max_length=255)
     start_time = models.TimeField()
     end_time = models.TimeField()
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Position(models.Model):
+    name = models.CharField(max_length=255)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -29,16 +36,15 @@ class Shift(models.Model):
 class StaffShift(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     shift = models.ForeignKey(Shift, on_delete=models.CASCADE)
-    shift_date = models.DateField()
 
     def __str__(self):
-        return f"{self.staff} - {self.shift} on {self.shift_date}"
+        return f"{self.staff} - {self.shift}"
     
 
 class StaffAttendance(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     date = models.DateField()
-    status = models.CharField(max_length=50, choices=[('Present', 'Present'), ('Absent', 'Absent')])
+    status = models.CharField(max_length=255, choices=[('Present', 'Present'), ('Absent', 'Absent')])
 
     def __str__(self):
         return f"{self.staff} - {self.date} - {self.status}"
