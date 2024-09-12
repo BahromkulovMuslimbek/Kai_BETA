@@ -1,5 +1,6 @@
 from django.core.validators import RegexValidator
 from django.db import models
+from django.db.models import Q
 
 
 class Staff(models.Model):
@@ -13,6 +14,12 @@ class Staff(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+    @classmethod
+    def search_by_name(cls, name):
+        return cls.objects.filter(
+            Q(first_name__icontains=name) | Q(last_name__icontains=name)
+        )
 
 
 class Shift(models.Model):

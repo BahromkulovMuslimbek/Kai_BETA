@@ -3,6 +3,16 @@
 {% block content %}
 <div style="margin-top: 100px; margin-left: 50px;">
     <h1>Staff List</h1>
+    
+    <form method="GET" action="{% url 'staff_list' %}" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" placeholder="Search by name" value="{{ request.GET.q }}">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+        </div>
+    </form>
+
     <a href="{% url 'staff_create' %}" class="btn btn-primary mb-3">Add New Staff</a>
     <table class="table">
         <thead>
@@ -29,6 +39,10 @@
                     <a href="{% url 'staff_edit' staff.id %}" class="btn btn-warning">Edit</a>
                     <a href="{% url 'staff_delete' staff.id %}" class="btn btn-danger">Delete</a>
                 </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No staff found</td>
             </tr>
             {% endfor %}
         </tbody>

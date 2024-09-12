@@ -1,9 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.db.models import Q
 from . import models
 
 
 def main(request):
-    staff_list = models.Staff.objects.all()
+    query = request.GET.get('q', '')
+    if query:
+        staff_list = models.Staff.objects.filter(
+            Q(first_name__icontains=query) | Q(last_name__icontains=query)
+        )
+    else:
+        staff_list = models.Staff.objects.all()
     return render(request, 'index.html', {'staff_list': staff_list})
 
 
