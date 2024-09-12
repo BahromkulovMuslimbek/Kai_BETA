@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Staff Attendance List</h1>
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Staff</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for attendance in attendance_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ attendance.staff }}</td>
+            <td>{{ attendance.date }}</td>
+            <td>{{ attendance.status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

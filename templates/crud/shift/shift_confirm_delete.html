@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-top: 100px; margin-left: 50px;">
+    <h1>Confirm Deletion</h1>
+    <p>Are you sure you want to delete the shift "{{ shift.name }}"?</p>
+    <form method="post" class="mt-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'shift_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

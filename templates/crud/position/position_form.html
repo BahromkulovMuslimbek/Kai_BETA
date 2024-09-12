@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-top: 100px; margin-left: 50px;">
+    <h1>{% if position %}Edit Position{% else %}Add New Position{% endif %}</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Position Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{% if position %}{{ position.name }}{% endif %}" required>
+        </div>
+        <button type="submit" class="btn btn-success ">{% if position %}Update{% else %}Create{% endif %}</button>
+    </form>
+
+</div>
+{% endblock %}

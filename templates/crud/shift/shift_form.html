@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-top: 100px; margin-left: 50px;">
+    <h1>{% if shift %}Edit{% else %}Add{% endif %} Shift</h1>
+    <form method="post" class="mt-5">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Shift Name" value="{% if shift %}{{ shift.name }}{% else %}''{% endif %}" class="form-control" required>
+        <input type="time" name="start_time" placeholder="Start Time" value="{% if shift %}{{ shift.start_time }}{% else %}''{% endif %}" class="form-control" required>
+        <input type="time" name="end_time" placeholder="End Time" value="{% if shift %}{{ shift.end_time }}{% else %}''{% endif %}" class="form-control" required>
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
+    </form>
+    <a href="{% url 'shift_list' %}" class="btn btn-secondary mt-3">Back to List</a>
+</div>
+
+{% endblock %}

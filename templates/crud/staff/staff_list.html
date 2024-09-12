@@ -3,14 +3,14 @@
 {% block content %}
 <div style="margin-top: 100px; margin-left: 50px;">
     <h1>Staff List</h1>
-    <a href="{% url 'staff_create' %}" class="btn btn-primary mb-3">Add New Staff</a>
+    <a href="{% url 'staff_create' %}" class="btn btn-primary mb-5">Add New Staff</a>
     <table class="table">
         <thead>
             <tr>
                 <th>#</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Phone</th>
+                <th>Phonee</th>
                 <th>Age</th>
                 <th>Address</th>
                 <th>Actions</th>
@@ -34,5 +34,4 @@
         </tbody>
     </table>
 </div>
-
 {% endblock %}

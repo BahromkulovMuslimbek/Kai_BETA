@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-top: 100px; margin-left: 50px;">
+    <h1>Shift List</h1>
+    <a href="{% url 'shift_create' %}" class="btn btn-primary mb-3">Add New Shift</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Shift Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for shift in shift_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ shift.name }}</td>
+                <td>{{ shift.start_time }}</td>
+                <td>{{ shift.end_time }}</td>
+                <td>
+                    <a href="{% url 'shift_edit' shift.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'shift_delete' shift.id %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

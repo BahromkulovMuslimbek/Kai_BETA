@@ -19,7 +19,6 @@ class Shift(models.Model):
     name = models.CharField(max_length=255)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    # staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

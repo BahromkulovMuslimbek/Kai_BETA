@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-top: 100px; margin-left: 50px;">
+    <h1>{% if staff %}Edit{% else %}Add{% endif %} Staff</h1>
+    <form method="post" class="mt-5">
+        {% csrf_token %}
+        <input type="text" name="first_name" placeholder="First Name" value="{{ staff.first_name|default:'' }}" class="form-control" required>
+        <input type="text" name="last_name" placeholder="Last Name" value="{{ staff.last_name|default:'' }}" class="form-control">
+        <input type="text" name="phone" placeholder="Phone" value="{{ staff.phone|default:'' }}" class="form-control" required>
+        <input type="number" name="age" placeholder="Age" value="{{ staff.age|default:'' }}" class="form-control">
+        <textarea name="address" placeholder="Address" class="form-control">{{ staff.address|default:'' }}</textarea>
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
+    </form>
+    <a href="{% url 'staff_list' %}" class="btn btn-secondary mt-3">Back to List</a>
+</div>
+
+{% endblock %}

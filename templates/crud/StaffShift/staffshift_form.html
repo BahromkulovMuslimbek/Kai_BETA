@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="margin-top: 100px; margin-left: 50px;">
+    <h1>{% if staffshift %}Edit{% else %}Add{% endif %} Staff Shift</h1>
+    <form method="post" class="mt-5">
+        {% csrf_token %}
+        <select name="staff" class="form-control" required>
+            {% for staff in staff_list %}
+                <option value="{{ staff.id }}" {% if staffshift and staffshift.staff.id == staff.id %}selected{% endif %}>{{ staff }}</option>
+            {% endfor %}
+        </select>
+        <select name="shift" class="form-control" required>
+            {% for shift in shift_list %}
+                <option value="{{ shift.id }}" {% if staffshift and staffshift.shift.id == shift.id %}selected{% endif %}>{{ shift }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="btn btn-primary mt-3">Save</button>
+    </form>
+    <a href="{% url 'staffshift_list' %}" class="btn btn-secondary mt-3">Back to List</a>
+</div>
+
+{% endblock %}
