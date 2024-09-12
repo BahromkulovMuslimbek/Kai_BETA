@@ -52,11 +52,11 @@ class StaffShift(models.Model):
 
 class StaffAttendance(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
-    date = models.DateField()
+    date_time = models.DateTimeField(blank=True, null=True)
     status = models.CharField(max_length=255, choices=[('Present', 'Present'), ('Absent', 'Absent')])
 
     class Meta:
-        unique_together = ('staff', 'date')
+        unique_together = ('staff', 'date_time')
 
     def __str__(self):
-        return f"{self.staff} - {self.date} - {self.status}"
+        return f"{self.staff} - {self.date_time} - {self.status}"

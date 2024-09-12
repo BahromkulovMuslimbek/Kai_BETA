@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     StaffListCreateAPIView, StaffRetrieveUpdateDestroyAPIView, ShiftListCreateAPIView, ShiftRetrieveUpdateDestroyAPIView, PositionListCreateAPIView, PositionRetrieveUpdateDestroyAPIView, 
-    StaffShiftListCreateAPIView, StaffShiftRetrieveUpdateDestroyAPIView, StaffAttendanceListCreateAPIView, StaffAttendanceRetrieveUpdateDestroyAPIView
+    StaffShiftListCreateAPIView, StaffShiftRetrieveUpdateAPIView, StaffAttendanceListCreateAPIView, StaffAttendanceRetrieveAPIView
 )
 
 urlpatterns = [
@@ -15,9 +15,10 @@ urlpatterns = [
     path('position/<int:pk>/', PositionRetrieveUpdateDestroyAPIView.as_view(), name='position-detail'),
 
     path('staff-shift/', StaffShiftListCreateAPIView.as_view(), name='staff-shift-list-create'),
-    path('staff-shift/<int:pk>/', StaffShiftRetrieveUpdateDestroyAPIView.as_view(), name='staff-shift-detail'),
+    path('staff-shift/<int:pk>/', StaffShiftRetrieveUpdateAPIView.as_view(), name='staff-shift-detail'),
 
     path('staff-attendance/', StaffAttendanceListCreateAPIView.as_view(), name='staff-attendance-list-create'),
-    path('staff-attendance/<int:pk>/', StaffAttendanceRetrieveUpdateDestroyAPIView.as_view(), name='staff-attendance-detail'),
+    path('staff-attendance/<int:pk>/', StaffAttendanceRetrieveAPIView.as_view(), name='staff-attendance-detail'),
+
 ]
 
