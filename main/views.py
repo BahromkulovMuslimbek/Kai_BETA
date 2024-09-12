@@ -15,7 +15,7 @@ def staff_create(request):
         age = request.POST.get('age')
         address = request.POST.get('address')
         models.Staff.objects.create(first_name=first_name, last_name=last_name, phone=phone, age=age, address=address)
-        return redirect('main')
+        return redirect('staff_list')
     return render(request, 'crud/staff/staff_form.html')
 
 
@@ -28,7 +28,7 @@ def staff_edit(request, pk):
         staff.age = request.POST.get('age')
         staff.address = request.POST.get('address')
         staff.save()
-        return redirect('main')
+        return redirect('staff_list')
     return render(request, 'crud/staff/staff_form.html', {'staff': staff})
 
 
@@ -36,7 +36,7 @@ def staff_delete(request, pk):
     staff = get_object_or_404(models.Staff, pk=pk)
     if request.method == 'POST':
         staff.delete()
-        return redirect('main')
+        return redirect('staff_list')
     return render(request, 'crud/staff/staff_confirm_delete.html', {'staff': staff})
 
 

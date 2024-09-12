@@ -1,29 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Staff Shift List</h1>
-<a href="{% url 'staffshift_create' %}" class="btn btn-primary mt-5">Add New Staff Shift</a>
-<table class="table">
-    <thead>
-        <tr>
-            <th>#</th>
-            <th>Staff</th>
-            <th>Shift</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for staffshift in staffshift_list %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ staffshift.staff }}</td>
-            <td>{{ staffshift.shift }}</td>
-            <td>
-                <a href="{% url 'staffshift_edit' staffshift.id %}" class="btn btn-warning">Edit</a>
-                <a href="{% url 'staffshift_delete' staffshift.id %}" class="btn btn-danger">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div style="margin-top: 100px; margin-left: 50px;">
+    <h1>Staff Shift List</h1>
+    <a href="{% url 'staffshift_create' %}" class="btn btn-primary mb-3">Add New Staff Shift</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Staff</th>
+                <th>Shift</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for staffshift in staffshift_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ staffshift.staff }}</td>
+                <td>{{ staffshift.shift }}</td>
+                <td>
+                    <a href="{% url 'staffshift_edit' staffshift.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'staffshift_delete' staffshift.id %}" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
 {% endblock %}

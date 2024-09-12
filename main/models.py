@@ -26,7 +26,7 @@ class Shift(models.Model):
 
 class Position(models.Model):
     name = models.CharField(max_length=255)
-    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    # staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
