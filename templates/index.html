@@ -3,14 +3,30 @@
 {% block content %}
 <div style="margin-top: 100px; margin-left: 50px;">
     <h1>Staff List</h1>
-    
+
     <form method="GET" action="{% url 'staff_list' %}" class="mb-3">
-        <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search by name" value="{{ request.GET.q }}">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit">Search</button>
+        <div class="row">
+            <div class="col-md-4">
+                <input type="text" name="q" class="form-control" placeholder="Search by name" value="{{ request.GET.q }}">
+            </div>
+            <div class="col-md-4">
+                <select name="shift" class="form-control">
+                    <option value="">Select Shift</option>
+                    {% for shift in shifts %}
+                    <option value="{{ shift.id }}" {% if request.GET.shift == shift.id|stringformat:"s" %}selected{% endif %}>{{ shift.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="status" class="form-control">
+                    <option value="">Select Attendance Status</option>
+                    {% for status in statuses %}
+                    <option value="{{ status }}" {% if request.GET.status == status %}selected{% endif %}>{{ status }}</option>
+                    {% endfor %}
+                </select>
             </div>
         </div>
+        <button class="btn btn-primary mt-3" type="submit">Filter</button>
     </form>
 
     <a href="{% url 'staff_create' %}" class="btn btn-primary mb-3">Add New Staff</a>
@@ -22,31 +38,32 @@
                 <th>Last Name</th>
                 <th>Phone</th>
                 <th>Age</th>
-                <th>Address</th>
+                <th>Position</th>
+                <th>Attendance Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for staff in staff_list %}
+            {% for item in staff_list %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td>{{ staff.first_name }}</td>
-                <td>{{ staff.last_name }}</td>
-                <td>{{ staff.phone }}</td>
-                <td>{{ staff.age }}</td>
-                <td>{{ staff.address }}</td>
+                <td>{{ item.staff.first_name }}</td>
+                <td>{{ item.staff.last_name }}</td>
+                <td>{{ item.staff.phone }}</td>
+                <td>{{ item.staff.age }}</td>
+                <td>{{ item.staff.position.name }}</td>
+                <td>{{ item.status }}</td>
                 <td>
-                    <a href="{% url 'staff_edit' staff.id %}" class="btn btn-warning">Edit</a>
-                    <a href="{% url 'staff_delete' staff.id %}" class="btn btn-danger">Delete</a>
+                    <a href="{% url 'staff_edit' item.staff.id %}" class="btn btn-warning">Edit</a>
+                    <a href="{% url 'staff_delete' item.staff.id %}" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7">No staff found</td>
+                <td colspan="8">No staff found</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
-
 {% endblock %}

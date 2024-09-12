@@ -33,7 +33,7 @@ class Shift(models.Model):
 
 class Position(models.Model):
     name = models.CharField(max_length=255)
-    # staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    staff = models.OneToOneField(Staff, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -43,6 +43,9 @@ class StaffShift(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     shift = models.ForeignKey(Shift, on_delete=models.CASCADE)
 
+    class Meta:
+        unique_together = ('staff', 'shift')
+
     def __str__(self):
         return f"{self.staff} - {self.shift}"
     
@@ -51,6 +54,9 @@ class StaffAttendance(models.Model):
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
     date = models.DateField()
     status = models.CharField(max_length=255, choices=[('Present', 'Present'), ('Absent', 'Absent')])
+
+    class Meta:
+        unique_together = ('staff', 'date')
 
     def __str__(self):
         return f"{self.staff} - {self.date} - {self.status}"

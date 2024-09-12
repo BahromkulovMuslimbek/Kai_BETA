@@ -8119,3 +8119,25 @@ image, text, .jvm-zoomin, .jvm-zoomout {
     stroke-dashoffset: 250; } }
 
 /*# sourceMappingURL=plugins.css.map */
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+}
+
+.footer {
+  background-color: #f8f9fa; /* Можно изменить цвет */
+  padding: 20px;
+  text-align: center;
+}

@@ -5,13 +5,38 @@ from . import models
 
 def main(request):
     query = request.GET.get('q', '')
+    shift_id = request.GET.get('shift', '')
+    attendance_status = request.GET.get('status', '')
+    staff_list = models.Staff.objects.all()
+
     if query:
-        staff_list = models.Staff.objects.filter(
+        staff_list = staff_list.filter(
             Q(first_name__icontains=query) | Q(last_name__icontains=query)
         )
-    else:
-        staff_list = models.Staff.objects.all()
-    return render(request, 'index.html', {'staff_list': staff_list})
+
+    if shift_id:
+        staff_ids_with_shift = models.StaffShift.objects.filter(shift_id=shift_id).values_list('staff_id', flat=True)
+        staff_list = staff_list.filter(id__in=staff_ids_with_shift)
+
+    if attendance_status:
+        staff_ids_with_attendance = models.StaffAttendance.objects.filter(status=attendance_status).values_list('staff_id', flat=True)
+        staff_list = staff_list.filter(id__in=staff_ids_with_attendance)
+
+    staff_attendance = models.StaffAttendance.objects.filter(staff__in=staff_list)
+    attendance_list = []
+    for staff in staff_list:
+        status = staff_attendance.filter(staff=staff).values_list('status', flat=True).first()
+        attendance_list.append({
+            'staff': staff,
+            'status': status or 'No Attendance Record'
+        })
+
+    context = {
+        'staff_list': attendance_list,
+        'shifts': models.Shift.objects.all(),
+        'statuses': ['Present', 'Absent'],
+    }
+    return render(request, 'index.html', context)
 
 
 def staff_create(request):
