@@ -1,4 +1,3 @@
-from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models import Q
 
@@ -6,9 +5,7 @@ from django.db.models import Q
 class Staff(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255, blank=True)
-    phone = models.CharField(max_length=15, unique=True,
-        # validators=[RegexValidator(regex=r'^\d{10,15}$', message="Telefonda 10 tadan 15 tagacha raqam bolishi kerak")]
-    )
+    phone = models.CharField(max_length=15, unique=True)
     age = models.IntegerField(blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, null=True)
 
